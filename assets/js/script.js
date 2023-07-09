@@ -15,13 +15,28 @@ var startQuizBtn = document.querySelector('#start-quiz');
 //why did getElementById not work?
 
 
+var quizTimer = function() {
+    console.log('quiz timer is starting');
+    var second = 100;
+    var timerStart = setInterval(function(){
+        document.querySelector('#timer').innerHTML = second;
+        second--;
+
+        if (second == 0){
+            //clear timer
+            clearInterval(timerStart);
+            document.querySelector('#timer').innerHTML = '';
+            alert('You have run out of time!');
+            //why is my alert popping up at 2 seconds displayed?
+        }
+    }, 1000);
+}
 
 //this adds an event listener to the start quiz button to begin the quiz when clicked once
 startQuizBtn.addEventListener('click', function() {
     console.log('quiz start button works');
     startQuizBtn.style.visibility = 'hidden'; 
-
-    
+    quizTimer();
 });
 
 
@@ -32,7 +47,7 @@ startQuizBtn.addEventListener('click', function() {
 //the choices key has a value that is an object containing key value pairs of the answer choices
 /*var questions = [
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 1',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -42,7 +57,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 2',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -52,7 +67,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 3',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -62,7 +77,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 4',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -72,7 +87,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 5',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -82,7 +97,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 6',
         choices: {
             a: 'choice a',
             b: 'choice b',
@@ -92,7 +107,7 @@ startQuizBtn.addEventListener('click', function() {
         correctAnswer: 'a',
     },
     {
-        question: 'coding stuff stuff stuff',
+        question: 'coding stuff stuff stuff 7',
         choices: {
             a: 'choice a',
             b: 'choice b',
