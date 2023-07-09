@@ -14,6 +14,81 @@
 var startQuizBtn = document.querySelector('#start-quiz');
 //why did getElementById not work?
 
+//this array holds the possible quiz questions in an array of objects
+//the questions are objects containing key value pairs of the question, choices and correct answer
+//the choices key has a value that is an object containing key value pairs of the answer choices
+var questions = [
+    {
+        question: 'Q 1',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 2',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 3',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 4',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 5',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 6',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+    {
+        question: 'Q 7',
+        choices: {
+            a: 'choice a',
+            b: 'choice b',
+            c: 'choice c',
+            d: 'choice d',
+        },
+        correctAnswer: 'a',
+    },
+]
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
@@ -32,89 +107,16 @@ var quizTimer = function() {
     }, 1000);
 }
 
+var showQuestion = function(){
+    console.log('quiz will show question when start btn clicked');
+    document.querySelector('.question').innerHTML = questions[0[0]];
+    console.log(questions[0].);
+
+}; 
 //this adds an event listener to the start quiz button to begin the quiz when clicked once
 startQuizBtn.addEventListener('click', function() {
     console.log('quiz start button works');
     startQuizBtn.style.visibility = 'hidden'; 
     quizTimer();
+    showQuestion();
 });
-
-
-
-
-//this array holds the possible quiz questions in an array of objects
-//the questions are objects containing key value pairs of the question, choices and correct answer
-//the choices key has a value that is an object containing key value pairs of the answer choices
-/*var questions = [
-    {
-        question: 'coding stuff stuff stuff 1',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 2',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 3',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 4',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 5',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 6',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-    {
-        question: 'coding stuff stuff stuff 7',
-        choices: {
-            a: 'choice a',
-            b: 'choice b',
-            c: 'choice c',
-            d: 'choice d',
-        },
-        correctAnswer: 'a',
-    },
-]
-*/
