@@ -12,108 +12,92 @@
 
 //This selects the start quiz button
 var startQuizBtn = document.getElementById('start-quiz');
-//why did getElementById not work?
+var multiChoice = document.getElementById('answers');
+var questionIndex = 0;
+var choicesIndex = 0;
 
 //this array holds the possible quiz questions in an array of objects
 //the questions are objects containing key value pairs of the question, choices and correct answer
 //the choices key has a value that is an object containing key value pairs of the answer choices
 var questions = [
     {
-        question: 'Commonly used data types include:',
-        choices: {
-            a: 'strings',
-            b: 'booleans',
-            c: 'alerts',
-            d: 'numbers',
-        },
-        correctAnswer: 'c',
+        question: 'Which of the following is not a commonly used data type?',
+        choices: ['strings', 'booleans', 'alerts', 'numbers'],
+        correctAnswer: 'alerts',
     },
     {
         question: 'The condition in an "if/else" statement is enclosed within ___.',
-        choices: {
-            a: 'quotes',
-            b: 'curly brackets',
-            c: 'parentheses',
-            d: 'square brackets',
-        },
+        choices: ['quotes', 'curly brackets', 'parentheses', 'square brackets'],
         correctAnswer: 'parentheses',
     },
     {
         question: 'Arrays in JavaScript can be used to store ___.',
-        choices: {
-            a: 'numbers and strings',
-            b: 'other arrays',
-            c: 'booleans',
-            d: 'all of the above',
-        },
-        correctAnswer: 'a',
+        choices: ['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
+        correctAnswer: 'numbers and strings',
     },
     {
         question: 'String values must be enclosed within ___ when being assigned to variables.',
-        choices: {
-            a: 'commas',
-            b: 'curly brackets',
-            c: 'quotes',
-            d: 'parentheses',
-        },
+        choices: ['commas', 'curly brackets', 'quotes', 'parentheses'],
         correctAnswer: 'quotes',
     },
     {
         question: 'A useful tool used during development and debugging for printing content to the debugger is:',
-        choices: {
-            a: 'JavaScript',
-            b: 'terminal/bash',
-            c: 'for loops',
-            d: 'console.log',
-        },
+        choices: ['JavaScript', 'terminal/bash', 'for loops', 'console.log'],
         correctAnswer: 'console.log',
     },
     {
         question: 'What is an object?',
-        choices: {
-            a: 'A type of website',
-            b: 'A datatype that can store complex data',
-            c: 'A type of operator',
-            d: 'A method within Javascript',
-        },
-        correctAnswer: 'A datatype that can store complex data'
+        choices: ['A type of website', 'A datatype that can store complex data', 'A type of operator', 'A method within Javascript'],
+        correctAnswer: 'A datatype that can store complex data',
     },
     {
         question: 'What is a best practice to make your code more accessable and easier to read for other developers?',
-        choices: {
-            a: 'Indent as little as you can',
-            b: 'Do not use brackets in your code',
-            c: 'Capitalize all of your variables',
-            d: 'Comment out your code'
-        },
+        choices: ['Indent as little as you can', 'Do not use brackets in your code', 'Capitalize all of your variables', 'Comment out your code'],
         correctAnswer: 'Comment out your code' 
     }
 ]
+
+//using dot notation to access questions and answers
+var currentQuestion = questions[questionIndex].question;
+console.log(currentQuestion);
+var ansChoices = questions[questionIndex].choices;
+console.log(ansChoices);
+
+var showQuestion = function(){
+    console.log('quiz will show question when start btn clicked');
+    document.getElementById('question').innerHTML = currentQuestion;
+    console.log(currentQuestion);
+    var li1 = document.createElement('li').innerHTML = ansChoices[0];
+    li1.appendChild.getElementById('answers');
+    document.getElementById('answers').innerHTML = ansChoices[1];
+    document.getElementById('answers').innerHTML = ansChoices[2];
+    document.getElementById('answers').innerHTML = ansChoices[3];
+    console.log(ansChoices);
+}; 
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
     var second = 5;
     var startTimer = setInterval(function(){
-        document.querySelector('#timer').innerHTML = second;
-        second--;
+
 
         if (second === 0){
             //when i set the above value to -1 the timer will stop at 0 but when it is set to 0 the timer will stop at 2
-            clearInterval(startTimer);
             //clear timer
-            document.querySelector('#timer').innerHTML = '';
-            alert('You have run out of time!');
+            document.getElementById('timer').innerHTML = 0;
+            console.log('You have run out of time!');
+            //create html elemnt instead of alert
+            clearInterval(startTimer);
             //why is my alert popping up at 2 seconds displayed?
+            //are the above 3 actions in the right order?
         }
+        document.getElementById('timer').innerHTML = second;
+        console.log(second);
+        second--;
     }, 1000);
 }
 
-var showQuestion = function(){
-    console.log('quiz will show question when start btn clicked');
-    document.querySelector('.question').innerHTML = questions[0].choices[0];
-    console.log(questions[0].choices[0]);
-}; 
-
+//following function hides the Start Quiz button after it is pressed to make quiz more aesthetically pleasing
 function hideBtn () {
     startQuizBtn.setAttribute('style', 'display:none');
 }
