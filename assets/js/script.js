@@ -13,6 +13,7 @@
 //This selects the start quiz button
 var startQuizBtn = document.getElementById('start-quiz');
 var multiChoice = document.getElementById('answers');
+//how to i select each of the li in the ul to add a click event listener?
 var questionIndex = 0;
 var choicesIndex = 0;
 
@@ -67,19 +68,26 @@ var showQuestion = function(){
     console.log('quiz will show question when start btn clicked');
     document.getElementById('question').innerHTML = currentQuestion;
     console.log(currentQuestion);
-    var li1 = document.createElement('li').innerHTML = ansChoices[0];
-    li1.appendChild.getElementById('answers');
-    document.getElementById('answers').innerHTML = ansChoices[1];
-    document.getElementById('answers').innerHTML = ansChoices[2];
-    document.getElementById('answers').innerHTML = ansChoices[3];
+    document.getElementById('choice-a').innerHTML = ansChoices[0];
+    document.getElementById('choice-b').innerHTML = ansChoices[1];
+    document.getElementById('choice-c').innerHTML = ansChoices[2];
+    document.getElementById('choice-d').innerHTML = ansChoices[3];
     console.log(ansChoices);
+
+    //can i put the event listener in here?
+    //if(click var === correctAnswer) {
+        //function to move to next question and answer set
+    //} else {
+        //subtract some number of seconds from second variable?
+    //}
+
+    //add event listener to inside of list element and make if-else statement for if click is on element that = correctAnswer then moves to next question and if clock is on element that does NTO equal correctAnswer time is taken from timer? scope might be a problem there
 }; 
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
-    var second = 5;
+    var second = 5; //should i move this to the global scope?
     var startTimer = setInterval(function(){
-
 
         if (second === 0){
             //when i set the above value to -1 the timer will stop at 0 but when it is set to 0 the timer will stop at 2
