@@ -1,7 +1,6 @@
 
 //upon selecting an answer user will be presented with incorrect or correct message and a "next question" button
 //after all questions are answered quiz will say "well done"
-    //quiz will display final score
     //quiz will ask for initials to save final score
     //data will be stored in local memory
     //button will ask if user wants to restart quiz and take user back to initial page with "start quiz" button
@@ -54,8 +53,10 @@ var allCheckBtns = document.querySelectorAll('.check-btn')
 var endBanner = document.querySelector('.end-banner');
 var nextBtn = document.querySelector('.next-btn');
 var submitBtn = document.querySelector('.submit-btn');
+var quizBody = document.querySelector('.container');
+var submitPage = document.querySelector('.submission');
 var questionIndex = 0;
-var second = 100;
+var second = 19;
 var startTimer;
 var score = 0
 
@@ -74,10 +75,8 @@ var checkAnswer = function() {
             questionIndex++;
             console.log('current question', questionIndex);
         } else {
+            endBanner.textContent = "Congratulations on completing the Quiz!";
             gameOver();
-            //document.getElementById('timer').innerHTML = 0;
-            endBanner.style.display = "block";
-            endBanner.textContent = "Congratulations on completing the Quiz!"
         }
         score++;
         console.log('score right:', score);
@@ -93,22 +92,24 @@ var checkAnswer = function() {
             questionIndex++;
             console.log('current question', questionIndex);
         } else {
-            endBanner.style.display = "block";
-            endBanner.textContent = "Congratulations on completing the Quiz!"
+            endBanner.textContent = "Congratulations on completing the Quiz!";
             gameOver();
         }
         console.log('score wrong:', score);
         nextQuestion();
     }
-        // add check to make sure time doesn't go below zero
+    // add check to make sure time doesn't go below zero
     if (second <= 0) {
         gameOver();
         document.getElementById('timer').innerHTML = 0;
-        endBanner.style.display = "block";
         endBanner.textContent = "Time's Up!";
     }
-    //can add banner
 }
+
+submitBtn.addEventListener('click', function(){
+    quizBody.style.display = 'none';
+    submitPage.style.display = 'block';
+})
 
 var nextQuestion = function() {
     nextBtn.addEventListener('click', function() {
@@ -117,8 +118,10 @@ var nextQuestion = function() {
 
 var gameOver = function() {
     clearInterval(startTimer);
+    endBanner.style.display = "block";
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'block';
+    document.getElementById('score').innerHTML = 'Your Score:' + score;
     console.log('gameOver is being run');
 }
 

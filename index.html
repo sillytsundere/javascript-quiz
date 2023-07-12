@@ -12,7 +12,7 @@
         <button id="view-scores">
             <h2>View High Scores</h2>
         </button>
-        <p>quiz description</p>
+        <p>Begin the quiz by clicking the "Start Quiz" button. Try to answer the following questions within the time limit. Be mindful; answering a question wrong will result in 10 seconds being deducted from the remaining time. Good luck!</p>
         <h2 id="timer"></h2>
     </header>
     <div class="end-banner" style="display:none;"></div>
@@ -21,7 +21,7 @@
                 <h2>Start Quiz!</h2>
         </button>
 
-        <section class="container">
+        <section class="container" style="display:block">
             <h3 id="question"></h3>
             <ul id="answers" style="list-style:none; display:none">
                 <li><button class="check-btn" id="choice-a"></button></li>
@@ -30,8 +30,15 @@
                 <li><button class="check-btn" id="choice-d"></button></li>
             </ul>
             <div id="result"></div>
+            <div id="score"></div>
             <button class="next-btn" style="display:none">Next Question</button>
             <button class="submit-btn" style="display:none">Submit Score</button>
+        </section>
+        <section class="submission" style="display:none">
+            <h3>Your Score</h3>
+            <form>
+                <input type="text" id="name">
+            </form>
         </section>
 
     </main>
