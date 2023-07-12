@@ -9,13 +9,13 @@
 <body>
     <header>
         <h1>JavaScript Quiz</h1>
-        <p>quiz description</p>
         <button id="view-scores">
             <h2>View High Scores</h2>
         </button>
+        <p>quiz description</p>
         <h2 id="timer"></h2>
     </header>
-
+    <div class="end-banner" style="display:none;"></div>
     <main>
         <button id="start-quiz">
                 <h2>Start Quiz!</h2>
@@ -23,13 +23,15 @@
 
         <section class="container">
             <h3 id="question"></h3>
-            <ul id="answers" style="list-style:none">
-                <li><button id="choice-a"></button></li>
-                <li><button id="choice-b"></button></li>
-                <li><button id="choice-c"></button></li>
-                <li><button id="choice-d"></button></li>
+            <ul id="answers" style="list-style:none; display:none">
+                <li><button class="check-btn" id="choice-a"></button></li>
+                <li><button class="check-btn" id="choice-b"></button></li>
+                <li><button class="check-btn" id="choice-c"></button></li>
+                <li><button class="check-btn" id="choice-d"></button></li>
             </ul>
-            <button class="submit-btn"> Submit Answer</button>
+            <div id="result"></div>
+            <button class="next-btn" style="display:none">Next Question</button>
+            <button class="submit-btn" style="display:none">Submit Score</button>
         </section>
 
     </main>

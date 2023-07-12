@@ -1,8 +1,4 @@
-//Quiz will start when "start button" is pressed
-//questions will remain hidden until quiz starts
-//upon quiz starting the "start quiz" button will become hidden
-//quiz container will display questions and multiple choice answers
-//user will select an answer and if incorrect time will be taken off the timer
+
 //upon selecting an answer user will be presented with incorrect or correct message and a "next question" button
 //after all questions are answered quiz will say "well done"
     //quiz will display final score
@@ -10,16 +6,11 @@
     //data will be stored in local memory
     //button will ask if user wants to restart quiz and take user back to initial page with "start quiz" button
 
-//This selects the start quiz button
-var startQuizBtn = document.getElementById('start-quiz');
-var multiChoice = document.getElementById('answers');
-//how to i select each of the li in the ul to add a click event listener?
-var questionIndex = 0;
-var choicesIndex = 0;
+
 
 //this array holds the possible quiz questions in an array of objects
 //the questions are objects containing key value pairs of the question, choices and correct answer
-//the choices key has a value that is an object containing key value pairs of the answer choices
+//the choices key holds a value of an array of the possible choices
 var questions = [
     {
         question: 'Which of the following is not a commonly used data type?',
@@ -57,47 +48,110 @@ var questions = [
         correctAnswer: 'Comment out your code' 
     }
 ]
+var startQuizBtn = document.getElementById('start-quiz');
+var multiChoice = document.getElementById('answers');
+var endBanner = document.querySelector('.end-banner');
+var nextBtn = document.querySelector('.next-btn');
+var submitBtn = document.querySelector('.submit-btn');
+var questionIndex = 0;
+var second = 100;
+var startTimer;
+var score = 0
 
-//using dot notation to access questions and answers
-var currentQuestion = questions[questionIndex].question;
-console.log(currentQuestion);
-var ansChoices = questions[questionIndex].choices;
-console.log(ansChoices);
-
-var showQuestion = function(){
-    console.log('quiz will show question when start btn clicked');
+var displayQuiz = function(){
+    multiChoice.style.display = 'block';
+    //using dot notation to access questions and answers
+    var currentQuestion = questions[questionIndex].question;
+    var ansChoices = questions[questionIndex].choices;
     document.getElementById('question').innerHTML = currentQuestion;
-    console.log(currentQuestion);
     document.getElementById('choice-a').innerHTML = ansChoices[0];
     document.getElementById('choice-b').innerHTML = ansChoices[1];
     document.getElementById('choice-c').innerHTML = ansChoices[2];
     document.getElementById('choice-d').innerHTML = ansChoices[3];
-    console.log(ansChoices);
+    document.getElementById('result').innerHTML = '';
 
-    //can i put the event listener in here?
-    //if(click var === correctAnswer) {
-        //function to move to next question and answer set
-    //} else {
-        //subtract some number of seconds from second variable?
-    //}
+    var allCheckBtns = document.querySelectorAll('.check-btn')
 
-    //add event listener to inside of list element and make if-else statement for if click is on element that = correctAnswer then moves to next question and if clock is on element that does NTO equal correctAnswer time is taken from timer? scope might be a problem there
+    allCheckBtns.forEach(function(btn){
+        btn.addEventListener('click', checkAnswer);
+    })
 }; 
+
+
+var checkAnswer = function() {
+    console.log('This: ', this.innerText);
+    console.log("Correct: ",questions[questionIndex].correctAnswer);
+
+    if (this.innerText === questions[questionIndex].correctAnswer) {
+        console.log('Correct answer choice');
+        document.getElementById('result').innerHTML = 'Correct';
+        nextBtn.style.display = "block";
+        if (questionIndex < 6) {
+            questionIndex++;
+            console.log('current question', questionIndex);
+        } else {
+            gameOver();
+            //document.getElementById('timer').innerHTML = 0;
+            endBanner.style.display = "block";
+            endBanner.textContent = "Congratulations on completing the Quiz!"
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+        }
+        score++;
+        console.log('score right:', score);
+        nextQuestion();
+        
+    } else {
+        //if result is wrong subtract 10 seconds from second var(timer)
+        second -= 10;
+        console.log('Wrong answer choice');
+        document.getElementById('result').innerHTML = 'Wrong';
+        nextBtn.style.display = "block";
+        if (questionIndex < 6) {
+            questionIndex++;
+            console.log('current question', questionIndex);
+        } else {
+            endBanner.style.display = "block";
+            endBanner.textContent = "Congratulations on completing the Quiz!"
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+            gameOver();
+        }
+        console.log('score wrong:', score);
+        nextQuestion();
+        // add check to make sure time doesn't go below zero
+        if (second <= 0) {
+            gameOver();
+            document.getElementById('timer').innerHTML = 0;
+            endBanner.style.display = "block";
+            endBanner.textContent = "Time's Up!"
+        }
+        //can add banner
+    }
+}
+
+var nextQuestion = function() {
+    nextBtn.addEventListener('click', function() {
+    displayQuiz();
+})}
+
+var gameOver = function() {
+    clearInterval(startTimer);
+    console.log('gameOver is being run');
+}
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
-    var second = 5; //should i move this to the global scope?
-    var startTimer = setInterval(function(){
+    startTimer = setInterval(function(){
 
         if (second === 0){
-            //when i set the above value to -1 the timer will stop at 0 but when it is set to 0 the timer will stop at 2
-            //clear timer
             document.getElementById('timer').innerHTML = 0;
             console.log('You have run out of time!');
             //create html elemnt instead of alert
-            clearInterval(startTimer);
-            //why is my alert popping up at 2 seconds displayed?
-            //are the above 3 actions in the right order?
+            gameOver();
+            endBanner.style.display = "block";
+            endBanner.textContent = "Time's Up!"
+
         }
         document.getElementById('timer').innerHTML = second;
         console.log(second);
@@ -114,5 +168,5 @@ startQuizBtn.addEventListener('click', function() {
     console.log('quiz start button works');
     hideBtn(); 
     quizTimer();
-    showQuestion();
+    displayQuiz();
 });
