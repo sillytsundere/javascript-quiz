@@ -50,6 +50,7 @@ var questions = [
 ]
 var startQuizBtn = document.getElementById('start-quiz');
 var multiChoice = document.getElementById('answers');
+var allCheckBtns = document.querySelectorAll('.check-btn')
 var endBanner = document.querySelector('.end-banner');
 var nextBtn = document.querySelector('.next-btn');
 var submitBtn = document.querySelector('.submit-btn');
@@ -58,28 +59,12 @@ var second = 100;
 var startTimer;
 var score = 0
 
-var displayQuiz = function(){
-    multiChoice.style.display = 'block';
-    //using dot notation to access questions and answers
-    var currentQuestion = questions[questionIndex].question;
-    var ansChoices = questions[questionIndex].choices;
-    document.getElementById('question').innerHTML = currentQuestion;
-    document.getElementById('choice-a').innerHTML = ansChoices[0];
-    document.getElementById('choice-b').innerHTML = ansChoices[1];
-    document.getElementById('choice-c').innerHTML = ansChoices[2];
-    document.getElementById('choice-d').innerHTML = ansChoices[3];
-    document.getElementById('result').innerHTML = '';
-
-    var allCheckBtns = document.querySelectorAll('.check-btn')
-
-    allCheckBtns.forEach(function(btn){
-        btn.addEventListener('click', checkAnswer);
-    })
-}; 
-
 var checkAnswer = function() {
     console.log('This: ', this.innerText);
     console.log("Correct: ",questions[questionIndex].correctAnswer);
+    allCheckBtns.forEach(function(btn){
+        btn.removeEventListener('click', checkAnswer);
+    })
 
     if (this.innerText === questions[questionIndex].correctAnswer) {
         console.log('Correct answer choice');
@@ -136,6 +121,23 @@ var gameOver = function() {
     submitBtn.style.display = 'block';
     console.log('gameOver is being run');
 }
+
+var displayQuiz = function(){
+    multiChoice.style.display = 'block';
+    //using dot notation to access questions and answers
+    var currentQuestion = questions[questionIndex].question;
+    var ansChoices = questions[questionIndex].choices;
+    document.getElementById('question').innerHTML = currentQuestion;
+    document.getElementById('choice-a').innerHTML = ansChoices[0];
+    document.getElementById('choice-b').innerHTML = ansChoices[1];
+    document.getElementById('choice-c').innerHTML = ansChoices[2];
+    document.getElementById('choice-d').innerHTML = ansChoices[3];
+    document.getElementById('result').innerHTML = '';
+
+    allCheckBtns.forEach(function(btn){
+        btn.addEventListener('click', checkAnswer);
+    })
+}; 
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
