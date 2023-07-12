@@ -1,10 +1,8 @@
 
-//upon selecting an answer user will be presented with incorrect or correct message and a "next question" button
 //after all questions are answered quiz will say "well done"
     //quiz will ask for initials to save final score
     //data will be stored in local memory
     //button will ask if user wants to restart quiz and take user back to initial page with "start quiz" button
-
 
 
 //this array holds the possible quiz questions in an array of objects
@@ -55,6 +53,8 @@ var nextBtn = document.querySelector('.next-btn');
 var submitBtn = document.querySelector('.submit-btn');
 var quizBody = document.querySelector('.container');
 var submitPage = document.querySelector('.submission');
+var scoreBtn = document.querySelector('.submit-score');
+var recordPage = document.querySelector('.score-record');
 var questionIndex = 0;
 var second = 19;
 var startTimer;
@@ -106,11 +106,6 @@ var checkAnswer = function() {
     }
 }
 
-submitBtn.addEventListener('click', function(){
-    quizBody.style.display = 'none';
-    submitPage.style.display = 'block';
-})
-
 var nextQuestion = function() {
     nextBtn.addEventListener('click', function() {
     displayQuiz();
@@ -125,7 +120,37 @@ var gameOver = function() {
     console.log('gameOver is being run');
 }
 
-var displayQuiz = function(){
+submitBtn.addEventListener('click', function(){
+    quizBody.style.display = 'none';
+    submitPage.style.display = 'block';
+    submitPage.children[0].textContent = "Your Final Score " + score;
+    endBanner.textContent = "";
+})
+
+scoreBtn.addEventListener('click', function(){
+    submitPage.style.display = 'none';
+    recordPage.style.display = 'block';
+
+    var initials = document.querySelector('#initials').value;
+    //var finalScore = valueOf.score;
+
+    window.localStorage.setItem('initials', initials);
+    window.localStorage.setItem('score', score);
+    //were only saving one set
+})
+
+var showScores = function() {
+    var initials = localStorage.getItem('initials', initials);
+    var score = localStorage.getItem('score', score);
+
+    var record = document.createElement('li');
+    recordPage.children[0].appendChild(record);
+    record.textContent = initials + ' ' + score;
+
+}
+
+//this function displays the quiz questions and answers upon starting the quiz and each time the next question button is pressed as well as runs the check answer function which checks for the correct answer and removes the event listener from the answer choice buttons to reduce error
+function displayQuiz() {
     multiChoice.style.display = 'block';
     //using dot notation to access questions and answers
     var currentQuestion = questions[questionIndex].question;
@@ -137,10 +162,10 @@ var displayQuiz = function(){
     document.getElementById('choice-d').innerHTML = ansChoices[3];
     document.getElementById('result').innerHTML = '';
 
-    allCheckBtns.forEach(function(btn){
+    allCheckBtns.forEach(function (btn) {
         btn.addEventListener('click', checkAnswer);
-    })
-}; 
+    });
+} 
 
 var quizTimer = function() {
     console.log('quiz timer is starting');
