@@ -77,7 +77,6 @@ var displayQuiz = function(){
     })
 }; 
 
-
 var checkAnswer = function() {
     console.log('This: ', this.innerText);
     console.log("Correct: ",questions[questionIndex].correctAnswer);
@@ -94,8 +93,6 @@ var checkAnswer = function() {
             //document.getElementById('timer').innerHTML = 0;
             endBanner.style.display = "block";
             endBanner.textContent = "Congratulations on completing the Quiz!"
-            nextBtn.style.display = 'none';
-            submitBtn.style.display = 'block';
         }
         score++;
         console.log('score right:', score);
@@ -113,21 +110,19 @@ var checkAnswer = function() {
         } else {
             endBanner.style.display = "block";
             endBanner.textContent = "Congratulations on completing the Quiz!"
-            nextBtn.style.display = 'none';
-            submitBtn.style.display = 'block';
             gameOver();
         }
         console.log('score wrong:', score);
         nextQuestion();
-        // add check to make sure time doesn't go below zero
-        if (second <= 0) {
-            gameOver();
-            document.getElementById('timer').innerHTML = 0;
-            endBanner.style.display = "block";
-            endBanner.textContent = "Time's Up!"
-        }
-        //can add banner
     }
+        // add check to make sure time doesn't go below zero
+    if (second <= 0) {
+        gameOver();
+        document.getElementById('timer').innerHTML = 0;
+        endBanner.style.display = "block";
+        endBanner.textContent = "Time's Up!";
+    }
+    //can add banner
 }
 
 var nextQuestion = function() {
@@ -137,6 +132,8 @@ var nextQuestion = function() {
 
 var gameOver = function() {
     clearInterval(startTimer);
+    nextBtn.style.display = 'none';
+    submitBtn.style.display = 'block';
     console.log('gameOver is being run');
 }
 
@@ -154,7 +151,7 @@ var quizTimer = function() {
 
         }
         document.getElementById('timer').innerHTML = second;
-        console.log(second);
+        //console.log(second);
         second--;
     }, 1000);
 }
