@@ -55,10 +55,15 @@ var quizBody = document.querySelector('.container');
 var submitPage = document.querySelector('.submission');
 var scoreBtn = document.querySelector('.submit-score');
 var recordPage = document.querySelector('.score-record');
+var highScores = document.querySelector('#high-scores');
+var viewScores = document.querySelector('#view-scores');
 var questionIndex = 0;
-var second = 19;
+var second = 100;
 var startTimer;
 var score = 0
+var goBack = document.createElement('button');
+goBack.textContent = 'Back to Start';
+recordPage.appendChild(goBack);
 
 var checkAnswer = function() {
     console.log('This: ', this.innerText);
@@ -116,7 +121,6 @@ var gameOver = function() {
     endBanner.style.display = "block";
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'block';
-    document.getElementById('score').innerHTML = 'Your Score:' + score;
     console.log('gameOver is being run');
 }
 
@@ -132,22 +136,56 @@ scoreBtn.addEventListener('click', function(){
     recordPage.style.display = 'block';
 
     var initials = document.querySelector('#initials').value;
-    //var finalScore = valueOf.score;
-
-    window.localStorage.setItem('initials', initials);
-    window.localStorage.setItem('score', score);
-    //were only saving one set
+    
+    var scores = window.localStorage.getItem('scores');
+    
+    var parsedScores = JSON.parse(scores);
+    console.log(parsedScores);
+    var newScore = {
+        name: initials,
+        score: score
+    };
+    if (!parsedScores){
+        var initialScores = {
+            scores: []
+        }
+        initialScores.scores.push(newScore);
+        localStorage.setItem('scores', JSON.stringify(initialScores));
+        console.log(initialScores);
+    } else {
+        console.log(parsedScores);
+        parsedScores.scores.push(newScore);
+        localStorage.setItem('scores', JSON.stringify(parsedScores));
+        console.log(parsedScores);
+    } 
+    showScores();
 })
 
+//function displays scores stored in local storage after quiz is finished as well as after clicking high scores button
 var showScores = function() {
-    var initials = localStorage.getItem('initials', initials);
-    var score = localStorage.getItem('score', score);
+    var allScores = JSON.parse(localStorage.getItem('scores'));
 
-    var record = document.createElement('li');
-    recordPage.children[0].appendChild(record);
-    record.textContent = initials + ' ' + score;
-
+    for (var i = 0; i < allScores.scores.length; i++) {
+        var record = document.createElement('li');
+        record.textContent = allScores.scores[i].name + ' ' + allScores.scores[i].score;
+        highScores.appendChild(record);
+        console.log(record);
+    }
 }
+
+//function takes user to high scores page after clicking view high scores button
+viewScores.addEventListener('click',function(){
+    recordPage.style.display = 'block';
+    hideBtn();
+    viewScores.removeEventListener('click', showScores());
+        
+})
+
+//function returns user to quiz begining after viewing high scores
+goBack.addEventListener('click', function(){
+    location.reload();
+});
+
 
 //this function displays the quiz questions and answers upon starting the quiz and each time the next question button is pressed as well as runs the check answer function which checks for the correct answer and removes the event listener from the answer choice buttons to reduce error
 function displayQuiz() {
@@ -167,6 +205,7 @@ function displayQuiz() {
     });
 } 
 
+//function runs the quiz timer
 var quizTimer = function() {
     console.log('quiz timer is starting');
     startTimer = setInterval(function(){
