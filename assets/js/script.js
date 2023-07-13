@@ -1,10 +1,3 @@
-
-//after all questions are answered quiz will say "well done"
-    //quiz will ask for initials to save final score
-    //data will be stored in local memory
-    //button will ask if user wants to restart quiz and take user back to initial page with "start quiz" button
-
-
 //this array holds the possible quiz questions in an array of objects
 //the questions are objects containing key value pairs of the question, choices and correct answer
 //the choices key holds a value of an array of the possible choices
@@ -45,6 +38,7 @@ var questions = [
         correctAnswer: 'Comment out your code' 
     }
 ]
+//selecting all necessary elements to run functions
 var startQuizBtn = document.getElementById('start-quiz');
 var multiChoice = document.getElementById('answers');
 var allCheckBtns = document.querySelectorAll('.check-btn')
@@ -61,46 +55,38 @@ var questionIndex = 0;
 var second = 100;
 var startTimer;
 var score = 0
+//next three lines of code create and append a back to start button to the high scores page at the end of the quiz or after clicking the view high scores button
 var goBack = document.createElement('button');
 goBack.textContent = 'Back to Start';
 recordPage.appendChild(goBack);
 
 var checkAnswer = function() {
-    console.log('This: ', this.innerText);
-    console.log("Correct: ",questions[questionIndex].correctAnswer);
     allCheckBtns.forEach(function(btn){
         btn.removeEventListener('click', checkAnswer);
     })
-
+    //this part of if else statement checks if answer is correct and adds a point to user's score
     if (this.innerText === questions[questionIndex].correctAnswer) {
-        console.log('Correct answer choice');
         document.getElementById('result').innerHTML = 'Correct';
         nextBtn.style.display = "block";
         if (questionIndex < 6) {
             questionIndex++;
-            console.log('current question', questionIndex);
         } else {
             endBanner.textContent = "Congratulations on completing the Quiz!";
             gameOver();
         }
         score++;
-        console.log('score right:', score);
-        nextQuestion();
-        
+        nextQuestion();   
     } else {
-        //if result is wrong subtract 10 seconds from second var(timer)
+        //if answer is wrong subtract 10 seconds from second var(timer) and no amount is added to score
         second -= 10;
-        console.log('Wrong answer choice');
         document.getElementById('result').innerHTML = 'Wrong';
         nextBtn.style.display = "block";
         if (questionIndex < 6) {
             questionIndex++;
-            console.log('current question', questionIndex);
         } else {
             endBanner.textContent = "Congratulations on completing the Quiz!";
             gameOver();
         }
-        console.log('score wrong:', score);
         nextQuestion();
     }
     // add check to make sure time doesn't go below zero
@@ -111,19 +97,21 @@ var checkAnswer = function() {
     }
 }
 
+//function takes user to next question once clicked
 var nextQuestion = function() {
     nextBtn.addEventListener('click', function() {
     displayQuiz();
 })}
 
+//function displays respective message and stops timer once quiz is finished
 var gameOver = function() {
     clearInterval(startTimer);
     endBanner.style.display = "block";
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'block';
-    console.log('gameOver is being run');
 }
 
+//function takes user from last question of quiz to page where they can submit their score
 submitBtn.addEventListener('click', function(){
     quizBody.style.display = 'none';
     submitPage.style.display = 'block';
@@ -131,6 +119,7 @@ submitBtn.addEventListener('click', function(){
     endBanner.textContent = "";
 })
 
+//function stores scores with paired initials into local storage and then displays them on high scores page
 scoreBtn.addEventListener('click', function(){
     submitPage.style.display = 'none';
     recordPage.style.display = 'block';
@@ -151,12 +140,9 @@ scoreBtn.addEventListener('click', function(){
         }
         initialScores.scores.push(newScore);
         localStorage.setItem('scores', JSON.stringify(initialScores));
-        console.log(initialScores);
     } else {
-        console.log(parsedScores);
         parsedScores.scores.push(newScore);
         localStorage.setItem('scores', JSON.stringify(parsedScores));
-        console.log(parsedScores);
     } 
     showScores();
 })
@@ -169,7 +155,6 @@ var showScores = function() {
         var record = document.createElement('li');
         record.textContent = allScores.scores[i].name + ' ' + allScores.scores[i].score;
         highScores.appendChild(record);
-        console.log(record);
     }
 }
 
@@ -185,7 +170,6 @@ viewScores.addEventListener('click',function(){
 goBack.addEventListener('click', function(){
     location.reload();
 });
-
 
 //this function displays the quiz questions and answers upon starting the quiz and each time the next question button is pressed as well as runs the check answer function which checks for the correct answer and removes the event listener from the answer choice buttons to reduce error
 function displayQuiz() {
@@ -207,12 +191,10 @@ function displayQuiz() {
 
 //function runs the quiz timer
 var quizTimer = function() {
-    console.log('quiz timer is starting');
     startTimer = setInterval(function(){
 
         if (second === 0){
             document.getElementById('timer').innerHTML = 0;
-            console.log('You have run out of time!');
             //create html elemnt instead of alert
             gameOver();
             endBanner.style.display = "block";
@@ -220,7 +202,6 @@ var quizTimer = function() {
 
         }
         document.getElementById('timer').innerHTML = second;
-        //console.log(second);
         second--;
     }, 1000);
 }
@@ -231,7 +212,6 @@ function hideBtn () {
 }
 //this adds an event listener to the start quiz button to begin the quiz when clicked once
 startQuizBtn.addEventListener('click', function() {
-    console.log('quiz start button works');
     hideBtn(); 
     quizTimer();
     displayQuiz();
