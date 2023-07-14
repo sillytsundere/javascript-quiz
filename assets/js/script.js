@@ -60,6 +60,47 @@ var goBack = document.createElement('button');
 goBack.textContent = 'Back to Start';
 recordPage.appendChild(goBack);
 
+//this function displays the quiz questions and answers upon starting the quiz and each time the next question button is pressed as well as runs the check answer function which checks for the correct answer and removes the event listener from the answer choice buttons to reduce error
+function displayQuiz() {
+    multiChoice.style.display = 'block';
+    //using dot notation to access questions and answers
+    var currentQuestion = questions[questionIndex].question;
+    var ansChoices = questions[questionIndex].choices;
+    document.getElementById('question').innerHTML = currentQuestion;
+    document.getElementById('choice-a').innerHTML = ansChoices[0];
+    document.getElementById('choice-b').innerHTML = ansChoices[1];
+    document.getElementById('choice-c').innerHTML = ansChoices[2];
+    document.getElementById('choice-d').innerHTML = ansChoices[3];
+    document.getElementById('result').innerHTML = '';
+
+    allCheckBtns.forEach(function (btn) {
+        btn.addEventListener('click', checkAnswer);
+    });
+    viewScores.setAttribute('style', 'display:none');
+} 
+
+//function runs the quiz timer
+var quizTimer = function() {
+    startTimer = setInterval(function(){
+
+        if (second === 0){
+            document.getElementById('timer').innerHTML = 0;
+            //create html elemnt instead of alert
+            gameOver();
+            endBanner.style.display = "block";
+            endBanner.textContent = "Time's Up!"
+
+        }
+        document.getElementById('timer').innerHTML = second;
+        second--;
+    }, 1000);
+}
+
+//following function hides the Start Quiz button after it is pressed to make quiz more aesthetically pleasing
+function hideBtn () {
+    startQuizBtn.setAttribute('style', 'display:none');
+}
+
 var checkAnswer = function() {
     allCheckBtns.forEach(function(btn){
         btn.removeEventListener('click', checkAnswer);
@@ -109,6 +150,18 @@ var gameOver = function() {
     endBanner.style.display = "block";
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'block';
+    viewScores.setAttribute('style', 'display:none');
+}
+
+//function displays scores stored in local storage after quiz is finished as well as after clicking high scores button
+var showScores = function() {
+    var allScores = JSON.parse(localStorage.getItem('scores'));
+
+    for (var i = 0; i < allScores.scores.length; i++) {
+        var record = document.createElement('li');
+        record.textContent = allScores.scores[i].name + ' ' + allScores.scores[i].score;
+        highScores.appendChild(record);
+    }
 }
 
 //function takes user from last question of quiz to page where they can submit their score
@@ -147,23 +200,12 @@ scoreBtn.addEventListener('click', function(){
     showScores();
 })
 
-//function displays scores stored in local storage after quiz is finished as well as after clicking high scores button
-var showScores = function() {
-    var allScores = JSON.parse(localStorage.getItem('scores'));
-
-    for (var i = 0; i < allScores.scores.length; i++) {
-        var record = document.createElement('li');
-        record.textContent = allScores.scores[i].name + ' ' + allScores.scores[i].score;
-        highScores.appendChild(record);
-    }
-}
-
 //function takes user to high scores page after clicking view high scores button
 viewScores.addEventListener('click',function(){
     recordPage.style.display = 'block';
     hideBtn();
-    viewScores.removeEventListener('click', showScores());
-        
+    showScores();
+    viewScores.setAttribute('style', 'display:none'); 
 })
 
 //function returns user to quiz begining after viewing high scores
@@ -171,45 +213,6 @@ goBack.addEventListener('click', function(){
     location.reload();
 });
 
-//this function displays the quiz questions and answers upon starting the quiz and each time the next question button is pressed as well as runs the check answer function which checks for the correct answer and removes the event listener from the answer choice buttons to reduce error
-function displayQuiz() {
-    multiChoice.style.display = 'block';
-    //using dot notation to access questions and answers
-    var currentQuestion = questions[questionIndex].question;
-    var ansChoices = questions[questionIndex].choices;
-    document.getElementById('question').innerHTML = currentQuestion;
-    document.getElementById('choice-a').innerHTML = ansChoices[0];
-    document.getElementById('choice-b').innerHTML = ansChoices[1];
-    document.getElementById('choice-c').innerHTML = ansChoices[2];
-    document.getElementById('choice-d').innerHTML = ansChoices[3];
-    document.getElementById('result').innerHTML = '';
-
-    allCheckBtns.forEach(function (btn) {
-        btn.addEventListener('click', checkAnswer);
-    });
-} 
-
-//function runs the quiz timer
-var quizTimer = function() {
-    startTimer = setInterval(function(){
-
-        if (second === 0){
-            document.getElementById('timer').innerHTML = 0;
-            //create html elemnt instead of alert
-            gameOver();
-            endBanner.style.display = "block";
-            endBanner.textContent = "Time's Up!"
-
-        }
-        document.getElementById('timer').innerHTML = second;
-        second--;
-    }, 1000);
-}
-
-//following function hides the Start Quiz button after it is pressed to make quiz more aesthetically pleasing
-function hideBtn () {
-    startQuizBtn.setAttribute('style', 'display:none');
-}
 //this adds an event listener to the start quiz button to begin the quiz when clicked once
 startQuizBtn.addEventListener('click', function() {
     hideBtn(); 
