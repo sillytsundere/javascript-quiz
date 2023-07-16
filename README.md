@@ -10,9 +10,17 @@ To run the code, clone the project directories from [my repository](https://gith
 
 ## Usage
 
-The webpage is straightforward and easy to use; it begins with a header, containing the title, instructions for taking the quiz and a button to view high scores. Below the header is a "Start Quiz" button that disappears once clicked and shows the quiz itself. The quiz contains a set of seven questions about vanilla JavaScript. Each question has four answer choices. After each answer is picked the user clicks the "Next Question" button to move to the next question. If a question is answered correctly a point is added to the user's score. If a question is answered incorrectly time is deducted from the quiz timer.
+The webpage is straightforward and easy to use; it begins with a header, containing the title, instructions for taking the quiz and a button to view high scores. Below the header is a "Start Quiz" button that disappears once clicked and shows the quiz itself. 
+
+![Initial webpage appearance](assets/images/initial-quiz.png)
+
+The quiz contains a set of seven questions about vanilla JavaScript. Each question has four answer choices. After each answer is picked the user clicks the "Next Question" button to move to the next question. If a question is answered correctly a point is added to the user's score. If a question is answered incorrectly time is deducted from the quiz timer.
+
+![Webpage appearance after "Start Quiz" button is clicked](assets/images/quiz-display.png)
 
 Once the quiz is finished - either by running out of time or by answering all the questions - the user can save their score by typing their initials in the form and clicking the "Submit" button. Clicking the final "Submit" button will display the user's score and initials in a list with other saved scores pulled from local storage. From this page the user can click a "Back to Start" button which returns them to the initial page with the "Start Quiz" button.
+
+![Webpage appearance displaying high scores](assets/images/high-scores-page.png)
 
 The deployed site can be reached at this link: https://sillytsundere.github.io/javascript-quiz/
 
