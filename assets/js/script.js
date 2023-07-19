@@ -15,7 +15,7 @@ var questions = [
     {
         question: 'Arrays in JavaScript can be used to store ___.',
         choices: ['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
-        correctAnswer: 'numbers and strings',
+        correctAnswer: 'all of the above',
     },
     {
         question: 'String values must be enclosed within ___ when being assigned to variables.',
@@ -34,8 +34,8 @@ var questions = [
     },
     {
         question: 'What is a best practice to make your code more accessable and easier to read for other developers?',
-        choices: ['Indent as little as you can', 'Do not use brackets in your code', 'Capitalize all of your variables', 'Comment out your code'],
-        correctAnswer: 'Comment out your code' 
+        choices: ['Indent as little as you can', 'Do not use brackets in your code', 'Capitalize all of your variables', 'Write comments in your code'],
+        correctAnswer: 'Write comments in your code' 
     }
 ]
 //selecting all necessary elements to run functions
@@ -89,7 +89,7 @@ var quizTimer = function() {
             gameOver();
             endBanner.style.display = "block";
             endBanner.textContent = "Time's Up!"
-
+            
         }
         document.getElementById('timer').innerHTML = second;
         second--;
@@ -185,8 +185,8 @@ scoreBtn.addEventListener('click', function(){
     console.log(parsedScores);
     var newScore = {
         name: initials,
-        score: score
-    };
+        score: score};
+        
     if (!parsedScores){
         var initialScores = {
             scores: []
