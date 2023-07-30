@@ -185,7 +185,8 @@ scoreBtn.addEventListener('click', function(){
     console.log(parsedScores);
     var newScore = {
         name: initials,
-        score: score};
+        score: score
+    };
         
     if (!parsedScores){
         var initialScores = {
